@@ -1,11 +1,12 @@
+# Imports
 import pygame
 import random 
 import math
 import time
 
 from pygame import mixer
+
 #initialize pygame
- 
 pygame.init()
 
 #create a screen
@@ -17,18 +18,18 @@ screen = pygame.display.set_mode((width, height))
 #event: anything that happens in the game window
 
 #background
-background = pygame.image.load('spacebackground.png')
-mixer.music.load('background.wav')
+background = pygame.image.load('assets/spacebackground.png')
+mixer.music.load('assets/background.wav')
 mixer.music.play(-1)
 
 #Adding background and title and icon
 
 pygame.display.set_caption("Space Invaders")
-icon = pygame.image.load('spaceship.png') #32*32 image
+icon = pygame.image.load('assets/spaceship.png') #32*32 image
 pygame.display.set_icon(icon)
 
 #Adding player image
-playerImg = pygame.image.load('player_spaceship.png')
+playerImg = pygame.image.load('assets/player_spaceship.png')
 playerX = width - 30 #approximately half width of the screen
 playerY = height * 0.8 #the player spaceship will be in the lower half 
 playerX_change = 0
@@ -42,7 +43,7 @@ enemyY_change = []
 num_of_enemies = 6
 
 for i in range(num_of_enemies):
-	enemyImg.append(pygame.image.load('alien.png'))
+	enemyImg.append(pygame.image.load('assets/alien.png'))
 	enemyX.append(random.randint(0,width - 65))
 	enemyY.append(random.randint(50,150))
 	enemyX_change.append(-3)
@@ -53,15 +54,15 @@ for i in range(num_of_enemies):
 #ready state: bullet not available
 #fire state: bullet has been fired
 
-bulletImg = pygame.image.load('bullet.png')
+bulletImg = pygame.image.load('assets/bullet.png')
 bulletX = random.randint(0,width)
 bulletY = height * 0.8
 bulletX = 0
 bullet_state ="ready"
 bulletY_change = 10
 
-main_enemy = pygame.image.load('alien_enemy.png')
-main_enemy_bullet = pygame.image.load('main_enemy_bullet.png')
+main_enemy = pygame.image.load('assets/alien_enemy.png')
+main_enemy_bullet = pygame.image.load('assets/main_enemy_bullet.png')
 main_enemyX = 250
 main_enemyY = 60
 main_enemyX_change = -3
@@ -73,8 +74,8 @@ main_enemy_bullet_state="ready"
 
 #score value
 score_value=0
-font = pygame.font.Font('RooseSally.ttf',32)
-game_over_font = pygame.font.Font('RooseSally.ttf',64)
+font = pygame.font.Font('fonts/RooseSally.ttf',32)
+game_over_font = pygame.font.Font('fonts/RooseSally.ttf',64)
 textX=10
 textY=10
 
@@ -143,7 +144,7 @@ while running:
 				if bullet_state is "ready":
 					bulletX  = playerX
 					fire_bullet(playerX, bulletY)
-					bullet_sound = mixer.Sound('laser.wav')
+					bullet_sound = mixer.Sound('assets/laser.wav')
 					bullet_sound.play()
 			
 
@@ -185,7 +186,7 @@ while running:
 			bullet_state = "ready"
 			enemyX[i] = random.randint(0,width - 65)
 			enemyY[i] = random.randint(50,150)
-			explosion_sound = mixer.Sound('explosion.wav')
+			explosion_sound = mixer.Sound('assets/explosion.wav')
 			explosion_sound.play()
 			score_value += 1
 			#print(score)
@@ -234,4 +235,3 @@ while running:
 	main_enemy_render(main_enemyX,main_enemyY)
 	#enemy(enemyX, enemyY)
 	pygame.display.update() #update the screen continuously
-
