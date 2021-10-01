@@ -14,7 +14,7 @@ height = 600
 
 screen = pygame.display.set_mode((width, height))
 
-#event: anything happening in the game window
+#event: anything that happens in the game window
 
 #background
 background = pygame.image.load('spacebackground.png')
