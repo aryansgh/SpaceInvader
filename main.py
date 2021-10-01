@@ -9,9 +9,10 @@ from pygame import mixer
 pygame.init()
 
 #create a screen
-#800 width
-#600 height
-screen = pygame.display.set_mode((800, 600))
+width = 800
+height = 600
+
+screen = pygame.display.set_mode((width, height))
 
 #event: anything happening in the game window
 
@@ -28,8 +29,8 @@ pygame.display.set_icon(icon)
 
 #Adding player image
 playerImg = pygame.image.load('player_spaceship.png')
-playerX = 370 #approximately half widhth of the screen
-playerY = 480 #the player spaceship will be in the lower half 
+playerX = width - 30 #approximately half width of the screen
+playerY = height * 0.8 #the player spaceship will be in the lower half 
 playerX_change = 0
 
 #adding the enemy
@@ -42,7 +43,7 @@ num_of_enemies = 6
 
 for i in range(num_of_enemies):
 	enemyImg.append(pygame.image.load('alien.png'))
-	enemyX.append(random.randint(0,735))
+	enemyX.append(random.randint(0,width - 65))
 	enemyY.append(random.randint(50,150))
 	enemyX_change.append(-3)
 	enemyY_change.append(40)
@@ -53,8 +54,8 @@ for i in range(num_of_enemies):
 #fire state: bullet has been fired
 
 bulletImg = pygame.image.load('bullet.png')
-bulletX = random.randint(0,800)
-bulletY = 480
+bulletX = random.randint(0,width)
+bulletY = height * 0.8
 bulletX = 0
 bullet_state ="ready"
 bulletY_change = 10
@@ -156,8 +157,8 @@ while running:
 
 	if playerX <= 0:
 		playerX = 0
-	elif playerX >= 736:
-		playerX = 736
+	elif playerX >= width - 64:
+		playerX = width - 64
 
 	#checking the location of the enemy
 	for i in range(num_of_enemies):
@@ -173,16 +174,16 @@ while running:
 		if enemyX[i] <= 0:
 			enemyX_change[i] = 3
 			enemyY[i] += enemyY_change[i]
-		elif enemyX[i] >= 736:
+		elif enemyX[i] >= width - 64:
 			enemyX_change[i] = -3
 			enemyY[i] += enemyY_change[i]
 		enemyX[i] += enemyX_change[i]
 
 		distance = isCollision(enemyX[i], enemyY[i], bulletX, bulletY)
 		if distance <=27 :
-			bulletY = 480
+			bulletY = height * 0.8
 			bullet_state = "ready"
-			enemyX[i] = random.randint(0,735)
+			enemyX[i] = random.randint(0,width - 65)
 			enemyY[i] = random.randint(50,150)
 			explosion_sound = mixer.Sound('explosion.wav')
 			explosion_sound.play()
@@ -193,12 +194,12 @@ while running:
 
 	if main_enemyX<=0:
 		main_enemyX_change=3
-	elif main_enemyX>=736:
+	elif main_enemyX>=width - 64:
 		main_enemyX_change=-3
 
 	main_enemyX=main_enemyX+main_enemyX_change
 
-	if main_enemy_bullet_Y>=600:
+	if main_enemy_bullet_Y>=height:
 		main_enemy_bullet_state="ready"
 		main_enemy_bullet_Y=60
 
@@ -212,15 +213,15 @@ while running:
 
 	distance = isCollision(playerX, playerY, main_enemy_bullet_X, main_enemy_bullet_Y)
 	if distance <=27 :
-		playerY = 2000
+		playerY = height * 3 + height/3
 		for j in range(num_of_enemies):
-			enemyY[j]=2000
+			enemyY[j]=height * 3 + height / 3
 
 		game_over_text()
 
 	if bulletY <= 0:
 		#global bullet_state
-		bulletY = 480
+		bulletY = height * 0.8
 		bullet_state = "ready"
 
 
